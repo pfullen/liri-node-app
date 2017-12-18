@@ -1,0 +1,33 @@
+{
+  "name": "liri-node-app",
+  "version": "1.0.0",
+  "description": "GT Coding bootcamp project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pfullen/liri-node-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pfullen/liri-node-app/issues"
+  },
+  "homepage": "https://github.com/pfullen/liri-node-app#readme",
+  "dependencies": {
+    "cfonts": "^1.1.3",
+    "clear": "0.0.1",
+    "cli-color": "^1.2.0",
+    "fonts": "0.0.2",
+    "google-tts-api": "0.0.2",
+    "i": "^0.3.6",
+    "node-spotify-api": "^1.0.7",
+    "request": "^2.83.0",
+    "say": "^0.14.0",
+    "speech-synth": "^1.0.1",
+    "twitter": "^1.7.1"
+  }
+}
