@@ -42,29 +42,42 @@ function talkNow(message) {
 function getMyTweets() {
     var client = new Twitter(twitterKeys);
     var params = {
-        screen_name: 'PeterJFullenCPA'
+        screen_name: 'PeterJFullenCPA',
+        count: 20
     };
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
-        if (!error) {
-            console.log(tweets);
+       if (!error) {
+           // tweets = JSON.parse(tweets);
+           //texts = tweets.text;
+            var counter = 1;
+            console.log(params.screen_name + " Tweets: \n");
+            tweets.forEach(function(tweet) {
+                
+                console.log("Tweet#" + counter + ":" + tweet.text + "\n");
+                counter++;
+            })
+
+
+         //  console.log(tweets.created_at);
+            //texts.forEach(function(text) {
+             //   console.log(text);
+           // })
+            //console.log(tweets.text);
+        } else {
+        	console.log(error);
         }
     });
 } // end of getMyTweets function 
 
 function formatSpotifyResponse(response) {
     var items = response.items;
-    items.forEach(function(album) {
-    })
+    items.forEach(function(album) {})
 } // end of formatSpotifyResponse
 
 
 // spotify example
 function spotifyThis(query, queryS) {
-   // console.log(query);
     var spotify = new Spotify(spotifyKeys);
-
-        
-      
     spotify.search({
         type: 'track',
         query: query
@@ -76,55 +89,30 @@ function spotifyThis(query, queryS) {
         var items = tracks.items;
         //console.log("THis is item" + items);
         items.find(function(item) {
-            //console.log(item);
-
             var albumInfos = item.album;
-
             console.log("Album Name: " + albumInfos.name);
-
-
             if (item.name === queryS) {
                 //console.log("This are the items" + item.album);
                 var artists = item.artists;
                 artists.forEach(function(artist) {
                     console.log("Artist: " + artist.name);
                 })
-
-
-                //console.log(item);
                 console.log("Song Name: " + item.name);
                 console.log("Song Preview: " + item.preview_url + "\n");
-
             }
-
         });
-
-        //	console.log("Song Name:" + item.name);
-        //	console.log("Preview URL:" + item.preview_url)
-
-
     });
 }; // end of spotifyThis function 
 
-//spotify.search({ type: 'track', query: 'Somewhere over the rainbow' }, function(err, data,body ) {
-//if (err) {
-// return console.log('Error occurred: ' + err);
-// }
-
-//console.log(body.items); 
-//body.forEach(function(data){
-//	console.log(data);
-//})
-//});
 
 function getSpotifyFromTxt() {
-  
+
     fs.readFile("random.txt", "utf8", function(error, data) {
         // If the code experiences any errors it will log the error to the console.
         if (error) {
             return console.log(error);
         } else {
-        	data = data.split(",");        	        	
+            data = data.split(",");
             console.log(data[1]);
             data = data[1];
             spotifyThis(data);
@@ -174,17 +162,14 @@ function processMsg(message) {
 }
 
 
-// Main program  
+// *******  Main code *******  
 CFonts.say('\t\tWelcome|to|Liri!', font);
 talkNow('Welcome to Leeri!');
 
 var args = process.argv;
-//console.log(args[2]);
 var command = args[2];
 var query = "";
 var queryS = "";
-
-
 
 // Make sure to capture all args
 for (var i = 3; i < args.length; i++) {
@@ -197,30 +182,25 @@ for (var i = 3; i < args.length; i++) {
     }
 }
 
-//var sQuery = JSON.stringify(query);
-
 switch (command) {
     case "my-tweets":
         getMyTweets();
         break;
     case "spotify-this-song":
         if (query === "") {
-            getSpotifyFromTxt();
-        } else {
-            spotifyThis(query, queryS);
+            query = '"The Sign" by Ace of Base.'
         }
-       
+        spotifyThis(query);
         break;
     case "movie-this":
         if (query === "") {
             processMsg("Please make sure to enter a movie as a arg");
-
         } else {
             movieThis(query);
         }
         break;
     case "do-what-it-says":
-        doWhatItSays();
+        getSpotifyFromTxt();
         break;
     case undefined:
         processMsg("Please make sure to enter a command argument");
